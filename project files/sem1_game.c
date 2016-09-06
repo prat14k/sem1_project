@@ -1,0 +1,101 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<conio.h>
+#include<graphics.h>
+#include<dos.h>
+void main()
+{
+	int x,y,dx,dy,x1,y1,y21=200,y22=280,i=3,gd=DETECT,gm,col,points=0;
+	char ch;
+	initgraph(&gd,&gm,"d:\\tc\\bgi");
+	clrscr();
+	randomize();
+	cleardevice();
+	dx=10-random(10);
+	dy=10-random(10);
+	x1=320;
+	y1=240;
+	setcolor(BLUE);
+	rectangle(50,50,590,430);
+	rectangle(60,60,580,420);
+	setfillstyle(1,BLUE);
+	floodfill(55,55,BLUE);
+	setcolor(0);
+	rectangle(580,50,590,430);
+	setfillstyle(1,0);
+	floodfill(585,55,0);
+	setcolor(RED);
+	rectangle(580,y21,590,y22);
+	setfillstyle(1,RED);
+	floodfill(585,240,RED);
+	delay(400);
+	while(ch!=27)
+	{
+		delay(25);
+		col=random(15);
+		if(kbhit())
+		{
+			ch=getch();
+			if(ch==50)
+			{
+				setcolor(0);
+				rectangle(580,y21,590,y22);
+				setfillstyle(1,0);
+				floodfill(585,y22-1,0);
+				y21+=i;
+				y22+=i;
+				if(y22>415)
+				{
+				       y21=339;
+				       y22=419;
+				}
+				setcolor(RED);
+				rectangle(580,y21,590,y22);
+				setfillstyle(1,RED);
+				floodfill(585,y22-1,RED);
+			}
+			else if(ch==56)
+			{
+				setcolor(0);
+				rectangle(580,y21,590,y22);
+				setfillstyle(1,0);
+				floodfill(585,y22-1,0);
+				y21-=i;
+				y22-=i;
+				if(y21<70)
+				{
+					y21=61;
+					y22=141;
+				}
+				setcolor(RED);
+				rectangle(580,y21,590,y22);
+				setfillstyle(1,RED);
+				floodfill(585,y22-1,RED);
+			}
+		}
+		if(x1>560)
+		{
+			if((y1<y21)||(y1>y22))
+			{
+				break;
+			}
+			points+=5;
+		}
+		if((x1<80)||(x1>560))
+			dx=-dx;
+		if((y1<80)||(y1>400))
+			dy=-dy;
+		setfillstyle(1,0);
+		setcolor(0);
+		circle(x1,y1,10);
+		floodfill(x1,y1,0);
+		x1=x1-dx;
+		y1=y1-dy;
+		setfillstyle(1,col);
+		setcolor(col);
+		circle(x1,y1,10);
+		floodfill(x1,y1,col);
+	}
+	printf("\t\t\t\tpoints=%2d",points);
+	delay(500);
+}
